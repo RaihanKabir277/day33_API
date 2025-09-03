@@ -1,9 +1,10 @@
-# print("day 33 with API starts here")
 
 import requests 
+from datetime import datetime
 
-MY_LAT = 51.507351
-MY_LON = -0.127758
+
+MY_LAT = 23.810331
+MY_LON = 90.412521
 
 
 # response = requests.get(url="http://api.open-notify.org/iss-now.json")
@@ -45,10 +46,17 @@ MY_LON = -0.127758
 parameters = {
     "lat" : MY_LAT,
     "lng" : MY_LON,
+    "formatted" : 0,     #change the time format
 }
 
 response = requests.get("https://api.sunrise-sunset.org/json", params=parameters)
 response.raise_for_status()
 data = response.json()
-print(data)
+sunrise = data["results"]["sunrise"].split("T")[1].split(":")[0]  #as here two list after split("T") so [1] means the second list now split(":") and last [0] means that now it will take the 1st value of seperated second list.
+sunset = data["results"]["sunset"].split("T")[1].split(":")[0]
 
+print(sunrise)
+print(sunset)   
+
+time_now = datetime.now()
+print(time_now.hour)
